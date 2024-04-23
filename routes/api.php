@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use \App\Models\Event;
+use \App\Http\Controllers\api\EventController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,4 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/', function () {
     return response()->json(['message' => 'Hello World!'], 200);
 });
+
+# build the route for the events api resource
+Route::apiResource('events', EventController::class);
+
+
 
