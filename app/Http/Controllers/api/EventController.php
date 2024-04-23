@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Http\Resources\AttendeeResource;
+use App\Http\Resources\EventResource;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -14,8 +16,8 @@ class EventController extends Controller
     public function index()
     {
         //
-        $events = Event::with('user')->get();
-        return $events;
+        $events = Event::with('user')->with('attendees')->get();
+        return EventResource::collection($events);
     }
 
     /**
@@ -24,6 +26,21 @@ class EventController extends Controller
     public function store(Request $request)
     {
         //
+
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'description' => 'required',
+                'date' => 'required|date',
+            ]);
+
+            $event = Event::create([
+                'name' => $validatedData['name'],
+                'description' => $validatedData['description'],
+                'date' => $validatedData['date'],
+            ]);
+
+            return new EventResource($event);
+        
     }
 
     /**
@@ -32,6 +49,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         //
+        return new EventResource($event);
     }
 
     /**
@@ -48,5 +66,11 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+        $event->delete();
+        return response()->json(['message' => 'Event deleted successfully']);
     }
+    /**
+     * Get the average number of attendees for the events.
+     */
+
 }

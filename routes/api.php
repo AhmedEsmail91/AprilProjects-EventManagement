@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\api\AttendeeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Models\Event;
 use \App\Http\Controllers\api\EventController;
+// use App\Http\Controllers\api\AttendeeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +28,10 @@ Route::get('/', function () {
 
 # build the route for the events api resource
 Route::apiResource('events', EventController::class);
+// build the route for the attendees api resource
+Route::apiResource('events.attendees', AttendeeController::class)->scoped(["event"]);
 
-
+// build the route to get the average number of attendees for each event
+// build the route to get the average number of attendees for each event
+Route::get('events/average-attendees', [EventController::class, 'averageAttendees']);
 

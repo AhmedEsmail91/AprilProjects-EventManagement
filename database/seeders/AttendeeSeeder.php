@@ -19,16 +19,19 @@ class AttendeeSeeder extends Seeder
         $eventCount = Event::count();
         $userCount = User::count();
 
-        $attendeeCount = rand(1, min(3, $userCount));
+        $minAttendees = 3;
+        $maxAttendees = 10;
 
-        Event::all()->each(function ($event) use ($attendeeCount, $userCount) {
+        Event::all()->each(function ($event) use ($minAttendees, $maxAttendees, $userCount) {
+            $attendeeCount = rand($minAttendees, $maxAttendees);
+            
             $users = User::inRandomOrder()->limit($attendeeCount)->get();
 
             $users->each(function ($user) use ($event) {
-                Attendee::factory()->create([
-                    'event_id' => $event->id,
-                    'user_id' => $user->id,
-                ]);
+            Attendee::factory()->create([
+                'event_id' => $event->id,
+                'user_id' => $user->id,
+            ]);
             });
         });
     }

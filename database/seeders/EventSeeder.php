@@ -24,8 +24,8 @@ class EventSeeder extends Seeder
             for ($i = 0; $i < 200; $i++) {
                 $user = $users->random();
                 Event::factory()->create([
-                    'name' => fake()->name,
-                    'description' => fake()->sentence(10),
+                    'name' => fake()->sentence(3),
+                    'description' => fake()->sentence(30),
                     'start_time' => $start_time = fake()->dateTimeBetween(now(), now()->addYear()),
                     'end_time' => fake()->dateTimeBetween($start_time, $start_time->modify("+1 month")),
                     'user_id' => $user->id
