@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AttendeeController;
+use App\Http\Controllers\Api\AuthContoller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Models\Event;
@@ -18,20 +19,24 @@ use \App\Http\Controllers\api\EventController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user()->name;
 });
 
 # make route for the homelanding page called "/"
 Route::get('/', function () {
-    return response()->json(['message' => 'Hello World!'], 200);
+    return response()->json(['message' => 'Hello World!'], status:401);
 });
 
 # build the route for the events api resource
 Route::apiResource('events', EventController::class);
-// build the route for the attendees api resource
-Route::apiResource('events.attendees', AttendeeController::class)->scoped(["event"]);
 
-// build the route to get the average number of attendees for each event
-// build the route to get the average number of attendees for each event
-Route::get('events/average-attendees', [EventController::class, 'averageAttendees']);
+// build the route for the attendees api resource
+Route::apiResource('events.attendees', AttendeeController::class)->scoped();
+
+# make route for the register page called "/register"
+Route::post('/register', [AuthContoller::class, 'register']);
+# make route for the login page called "/login"
+Route::post('/login', [AuthContoller::class, 'login']);
+# make route for the logout page called "/logout"
+Route::post('/logout', [AuthContoller::class, 'logout']);
 

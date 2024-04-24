@@ -35,7 +35,7 @@ class AttendeeController extends Controller
     
     public function show(Event $event, Attendee $attendee)
     {
-        return new AttendeeResource($event->attendees()->with('user')->find($attendee->id));
+        return new AttendeeResource($attendee);
     }
     
 
