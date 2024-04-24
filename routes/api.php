@@ -38,5 +38,6 @@ Route::post('/register', [AuthContoller::class, 'register']);
 # make route for the login page called "/login"
 Route::post('/login', [AuthContoller::class, 'login']);
 # make route for the logout page called "/logout"
-Route::post('/logout', [AuthContoller::class, 'logout']);
+/// the middleware is used to check if the user is authenticated or not.
+Route::post('/logout', [AuthContoller::class, 'logout'])->middleware('auth:sanctum');
 

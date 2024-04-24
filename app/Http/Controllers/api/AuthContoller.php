@@ -59,7 +59,8 @@ class AuthContoller extends Controller
                 $token=$user->createToken($request->email,['Event:index'])->plainTextToken;
                 return response()->json([
                     'token' => $token,
-                    'message' => 'Success'
+                    'message' => 'Success',
+                    // 'relation'=> $user->tokens()->latest()
                 ]);
             }
             // if the password is not correct throw Validation Exception.
@@ -75,7 +76,9 @@ class AuthContoller extends Controller
     public function logout(Request $request)
     {
         // Your code here
-        $request->user()->token()->revoke();
-        return response()->json(['message' => 'Successfully logged out']);
+        $request->user()->tokens()->delete();
+        
+        // return response()->json(['message' => 'Successfully logged out']);
+        return redirect('/'); // redirect to the home page.
     }
 }

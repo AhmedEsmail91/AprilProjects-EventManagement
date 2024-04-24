@@ -23,7 +23,7 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($request)
+    public function index()
     {
         //
         $query = $this->loadRelationships(Event::query());
