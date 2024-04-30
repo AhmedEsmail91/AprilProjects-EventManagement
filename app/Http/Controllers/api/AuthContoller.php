@@ -19,6 +19,7 @@ class AuthContoller extends Controller
         ]);
         // check if the user already exists in the database.
         $user=\App\Models\User::where('email', $request->email)->first();
+        
         if($user){
             throw ValidationException::withMessages([
                 'email' => ['The email has already been taken.'],
@@ -37,7 +38,7 @@ class AuthContoller extends Controller
         }
         
     }
-
+    // Logging in handler method.
     public function login(Request $request)
     {
         // Your code here
@@ -79,6 +80,6 @@ class AuthContoller extends Controller
         $request->user()->tokens()->delete();
         
         // return response()->json(['message' => 'Successfully logged out']);
-        return redirect('/'); // redirect to the home page.
+        return redirect()->route('loggedout.api'); // redirect to the home page.
     }
 }

@@ -23,9 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 # make route for the homelanding page called "/"
+// Route::get('/', function () {
+//     return response()->json(['message' => 'Hello World!'], status:401);
+// });
 Route::get('/', function () {
-    return response()->json(['message' => 'Hello World!'], status:401);
-});
+    return response()->json(['message' => 'LoggedOut']);
+})->name('loggedout.api');
 
 # build the route for the events api resource
 Route::apiResource('events', EventController::class);
@@ -36,7 +39,7 @@ Route::apiResource('events.attendees', AttendeeController::class)->scoped();
 # make route for the register page called "/register"
 Route::post('/register', [AuthContoller::class, 'register']);
 # make route for the login page called "/login"
-Route::post('/login', [AuthContoller::class, 'login']);
+Route::post('/login', [AuthContoller::class, 'login'])->name('login');
 
 # make route for the logout page called "/logout"
 /// the middleware is used to check if the user is authenticated or not.
