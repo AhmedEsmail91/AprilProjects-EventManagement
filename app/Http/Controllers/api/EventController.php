@@ -19,7 +19,10 @@ class EventController extends Controller
     private array $relations = ['user', 'attendees', 'attendees.user'];
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index', 'show');
+        // $this->middleware('auth:sanctum')->except('index', 'show');
+        // To authorize the resource using policy to check if the user can perform the action,
+        // To ensure that each policy method is called when the corresponding controller action is called.
+        $this->authorizeResource(Event::class, 'event');
     }
     /**
      * Display a listing of the resource.
@@ -71,7 +74,7 @@ class EventController extends Controller
         //     return response()->json(['message' => 'You are not authorized to update this event'],status:403);
         // }
         // or simply use the authorize helper method
-        $this->authorize('update', $event);
+        // $this->authorize('update', $event); // cause we use th policie now
         $event->update(
             $request->validate([
                 'name' => 'sometimes|string|max:255',
@@ -92,7 +95,7 @@ class EventController extends Controller
         // if(!Gate::allows('delete-event',$event)){
         //     return response()->json(['message' => 'You are not authorized to delete this event'],status:403);
         // }
-        $this->authorize('delete', $event);
+        // $this->authorize('delete', $event);
         $event->delete();
         return response()->json(['message' => 'Event deleted successfully'],status:204);
     }

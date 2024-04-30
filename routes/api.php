@@ -19,7 +19,8 @@ use \App\Http\Controllers\api\EventController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user()->makeHidden(['id','created_at','updated_at','email_verified_at']);
+    // return $request->user()->makeHidden(['id','created_at','updated_at','email_verified_at']);
+    return $request->user();
 });
 
 # make route for the homelanding page called "/"
@@ -34,7 +35,7 @@ Route::get('/', function () {
 Route::apiResource('events', EventController::class);
 
 // build the route for the attendees api resource
-Route::apiResource('events.attendees', AttendeeController::class)->scoped();
+Route::apiResource('events.attendees', AttendeeController::class)->scoped()->middleware('auth:sanctum');
 
 # make route for the register page called "/register"
 Route::post('/register', [AuthContoller::class, 'register']);

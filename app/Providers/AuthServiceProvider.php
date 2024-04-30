@@ -18,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+
     ];
 
     /**
@@ -25,11 +26,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerPolicies();
-        Gate::define('update-event',fn(User $user,Event $event)=>$event->user_id===$user->id);
-        Gate::define('delete-event',fn(User $user,Event $event)=>$event->user_id===$user->id);
+        // $this->registerPolicies();
+        // Gate::define('update-event',fn(User $user,Event $event)=>$event->user_id===$user->id);
+        // Gate::define('delete-event',fn(User $user,Event $event)=>$event->user_id===$user->id);
 
-        Gate::define('delete-attendee',fn(User $user,Event $event)=>$event->user_id===$user->id || in_array($user->id,$event->attendees->pluck('user_id')->toArray()));
+        // Gate::define('delete-attendee',fn(User $user,Event $event)=>$event->user_id===$user->id || in_array($user->id,$event->attendees->pluck('user_id')->toArray()));
         // or
         // crate attendee 
         // Gate::define('create-attendee',fn(User $user,Event $event)=>$event->user_id===$user->id);
