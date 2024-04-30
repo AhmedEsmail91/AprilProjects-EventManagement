@@ -1,0 +1,16 @@
+Commit Message
+
+Summary:
+- Creating your own Commands, and Reminding System for Events
+
+Details:
+- The system help to remind the attendees with the events which are comming in next 24 hours.
+
+Related Issues:
+- Having issue in reminding the Attendees
+
+Testing:
+- Using Terminal excute:{php artisan app:send-event-reminders}
+
+//Notes:
+//- Add any additional notes or comments that may be helpful for understanding the changes.
