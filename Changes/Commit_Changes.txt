@@ -1,16 +1,17 @@
-Commit Message
+Queue
 
 Summary:
-- Creating your own Commands, and Reminding System for Events
+- Queue Creation (Calling)
 
 Details:
-- The system help to remind the attendees with the events which are comming in next 24 hours.
+- To make a queue first we can use `php artisan queue:table` to use the database in the saving the tasks and consider the table as a queue  then `php artisan migrate`.
+- and make sure in the .env file 'QUEUE_CONNECTION=database'
 
 Related Issues:
-- Having issue in reminding the Attendees
+- Saving the tasks in queue to make the project perform well and has no latency and make it satisfied for user experince.
 
 Testing:
-- Using Terminal excute:{php artisan app:send-event-reminders}
+- Using Terminal excute:{php artisan queue:work} --> use pick up from the queue and work on it.
 
 //Notes:
 //- Add any additional notes or comments that may be helpful for understanding the changes.
