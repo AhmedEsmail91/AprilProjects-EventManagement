@@ -40,13 +40,19 @@ class SendEventReminders extends Command
         // ->pluck('attendees.*.user.name');
 
         /* Or simply use WhereBetween */
-        $event=\App\Models\Event::whereBetween('start_time', [now(), now()->addMonths(3)])->get();
+        $events=\App\Models\Event::whereBetween('start_time', [now(), now()->addMonths(3)])->get();
         // get the count of the events in the previous time interval
         // $count = $event->count();
         // $eventLabel=Str('events', $count);
         // $this->info("$count $eventLabel found in the next month");
-        
-        $event->each(fn($event)=>$event->attendees->each(fn($attendees)=>$this->info("Sending reminder to {$attendees->user->name}")));
+        $counter=0;
+        $events->each(
+            fn($event)=>$event->attendees->each(
+                function($attendees) use ($event,&$counter){
+                    $this->info("Sending reminder to {$attendees->user->name}");
+                    $attendees->user->notify(new \App\Notifications\EventRemiderNotification($event));
+                    if(++$counter>=10)return false;
+    }));
         
         // $this->info('Reminder notifications sent successfully!');
     }

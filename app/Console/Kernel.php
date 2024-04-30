@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use \App\Console\Commands\SendEventReminders;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,7 +13,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Schedule the command to run.
+        // $schedule->command('app:send-event-reminders')->everyTenSeconds();
+        // $schedule->command(SendEventReminders::class)->everyTenSeconds();
+        
+        // Saving the output of the command to a file.
+        // to save the output of the command to a file, use the following syntax
+        // $schedule->command('app:send-event-reminders')->everyTenSeconds()->appendOutputTo('storage/logs/send-event-reminders.log');
+        // or use the following syntax
+        // $schedule->command(SendEventReminders::class)->everyTenSeconds()->sendOutputTo('storage/logs/send-event-reminders.log');
     }
 
     /**
