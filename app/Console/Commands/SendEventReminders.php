@@ -40,7 +40,7 @@ class SendEventReminders extends Command
         // ->pluck('attendees.*.user.name');
 
         /* Or simply use WhereBetween */
-        $events=\App\Models\Event::whereBetween('start_time', [now(), now()->addMonths(3)])->get();
+        $events=\App\Models\Event::whereBetween('start_time', [now(), now()->addDays(25)])->get();
         // get the count of the events in the previous time interval
         // $count = $event->count();
         // $eventLabel=Str('events', $count);

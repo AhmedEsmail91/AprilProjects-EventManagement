@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EventRemiderNotification extends Notification
+class EventRemiderNotification extends Notification implements ShouldQueue // defining the notification class to be used in the command.
 {
     use Queueable;
 
@@ -37,7 +37,6 @@ class EventRemiderNotification extends Notification
     public function toMail(object $notifiable): MailMessage // defining the mail message to be sent.
     {
         return (new MailMessage)
-
                     ->greeting('Hello!')
                     ->line('Reminder you have an upcoming event'.$this->event->start_date)
                     ->action('Visit our KnowledgeBase', url('http://41.33.207.85/KB'))
