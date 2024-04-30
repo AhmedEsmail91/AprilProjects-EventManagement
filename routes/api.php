@@ -19,7 +19,7 @@ use \App\Http\Controllers\api\EventController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user()->name;
+    return $request->user()->makeHidden(['id','created_at','updated_at','email_verified_at']);
 });
 
 # make route for the homelanding page called "/"

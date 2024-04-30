@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Http\Resources\AttendeeResource;
 use App\Http\Resources\EventResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
@@ -66,6 +67,11 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        // if(Gate::denies('update-event',$event)){
+        //     return response()->json(['message' => 'You are not authorized to update this event'],status:403);
+        // }
+        // or simply use the authorize helper method
+        $this->authorize('update', $event);
         $event->update(
             $request->validate([
                 'name' => 'sometimes|string|max:255',
@@ -83,8 +89,11 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        // if(!Gate::allows('delete-event',$event)){
+        //     return response()->json(['message' => 'You are not authorized to delete this event'],status:403);
+        // }
+        $this->authorize('delete', $event);
         $event->delete();
-
         return response()->json(['message' => 'Event deleted successfully'],status:204);
     }
 

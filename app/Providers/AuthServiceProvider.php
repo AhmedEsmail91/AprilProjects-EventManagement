@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Event;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,7 +26,13 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+        Gate::define('update-event',fn(User $user,Event $event)=>$event->user_id===$user->id);
+        Gate::define('delete-event',fn(User $user,Event $event)=>$event->user_id===$user->id);
 
+        Gate::define('delete-attendee',fn(User $user,Event $event)=>$event->user_id===$user->id || in_array($user->id,$event->attendees->pluck('user_id')->toArray()));
+        // or
+        // crate attendee 
+        // Gate::define('create-attendee',fn(User $user,Event $event)=>$event->user_id===$user->id);
         //
     }
 }
