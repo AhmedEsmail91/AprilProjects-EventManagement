@@ -22,6 +22,8 @@ class EventController extends Controller
         // $this->middleware('auth:sanctum')->except('index', 'show');
         // To authorize the resource using policy to check if the user can perform the action,
         // To ensure that each policy method is called when the corresponding controller action is called.
+        // $this->middleware('throttling:60,1')->only(['store','destroy']); // 60 requests per minute
+        $this->middleware('throttle:api')->only(['store','destroy']); // using custom throttle middleware
         $this->authorizeResource(Event::class, 'event');
     }
     /**
